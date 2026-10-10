@@ -1,0 +1,33 @@
+# Secrets / local config
+.env
+config.json
+*.key
+*.pem
+
+# Virtualenv
+.venv/
+venv/
+
+# Runtime data (keep folder, ignore contents)
+data/*
+!data/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

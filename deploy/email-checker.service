@@ -1,0 +1,20 @@
+[Unit]
+Description=Email Auto Checker (AI triage + Telegram)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/email-checker
+ExecStart=/home/pi/email-checker/.venv/bin/python main.py watch
+Restart=on-failure
+RestartSec=30
+
+# Keep all caches/temp inside the project folder
+Environment=PIP_CACHE_DIR=/home/pi/email-checker/.pip-cache
+Environment=PYTHONPYCACHEPREFIX=/home/pi/email-checker/.pycache
+Environment=TMPDIR=/home/pi/email-checker/.tmp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,35 @@
+{
+  "check_interval_seconds": 300,
+  "max_emails_per_check": 25,
+  "days_lookback": 7,
+  "importance_criteria": "Mark as important only if: (1) a human needs a reply or decision from me, (2) money, billing, security, or account access is involved, (3) a deadline is within 7 days, or (4) it is from someone I regularly work with and action is required. Ignore marketing, newsletters, automated notifications that need no action, and social media unless there is a direct request.",
+  "accounts": [
+    {
+      "name": "gmail",
+      "provider": "gmail",
+      "enabled": true
+    },
+    {
+      "name": "outlook",
+      "provider": "outlook",
+      "enabled": true
+    }
+  ],
+  "folders": ["INBOX"],
+  "ai": {
+    "timeout_seconds": 60,
+    "max_body_chars": 6000
+  },
+  "telegram": {
+    "enabled": true,
+    "send_non_important_digest": false
+  },
+  "memory": {
+    "path": "data/memory.json",
+    "max_decisions": 2000
+  },
+  "logging": {
+    "level": "INFO",
+    "path": "logs/checker.log"
+  }
+}
