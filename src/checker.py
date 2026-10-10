@@ -150,13 +150,9 @@ class EmailChecker:
                 self.memory.mark_processed(account.name, mail.message_id or mail.uid)
                 self.memory.mark_processed(account.name, mail.uid)
                 self.memory.save()
-
-                # Mark as seen so we do not re-fetch forever
-                for folder in self.cfg.folders:
-                    try:
-                        client.mark_seen(folder, mail.uid)
-                    except Exception:  # noqa: BLE001
-                        pass
+                # Intentionally do NOT mark as read — user keeps \Unseen in their client.
+                # Dedup is handled by memory.json (processed UIDs / Message-IDs).
+                # Fetch uses BODY.PEEK so the mailbox flags are never touched.
 
 
 def _esc(text: str) -> str:

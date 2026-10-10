@@ -34,8 +34,10 @@ All runtime data (venv, caches, logs, memory) stays **inside this project folder
 ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐     ┌──────────────┐
 │ Gmail /     │────▶│ AI classifier│────▶│ JSON memory     │────▶│ Telegram     │
 │ Outlook     │     │ (your prompt │     │ data/memory.json│     │ bot summary  │
-│ (IMAP)      │     │  + your key) │     │                 │     │ (if important│
-└─────────────┘     └──────────────┘     └─────────────────┘     └──────────────┘
+│ (IMAP, read │     │  + your key) │     │ (dedup only)    │     │ (if important│
+│  only)      │     └──────────────┘     └─────────────────┘     └──────────────┘
+└─────────────┘
+  mail stays unread
 ```
 
 | Feature | Detail |
@@ -45,6 +47,7 @@ All runtime data (venv, caches, logs, memory) stays **inside this project folder
 | AI providers | OpenAI-compatible (OpenAI, DeepSeek, Groq, Ollama, …) or Anthropic |
 | Alerts | Telegram bot message with summary + suggested action |
 | Memory | Human-readable JSON of processed mail and decisions |
+| Mail flags | **Never marks mail as read** — stays `\Unseen` for you |
 | Privacy | Keys stay in local `.env`; nothing cached outside the folder |
 
 ---
@@ -295,6 +298,8 @@ You write the rules in `config.json` → `importance_criteria`. The AI reads **o
 
 - **Important** → Telegram alert with summary + action
 - **Not important** → only written to JSON memory (unless digest is enabled)
+
+**Read-only inbox:** the checker fetches with `BODY.PEEK[]` and never sets the `\Seen` flag. Your Gmail/Outlook messages stay unread after triage. Re-checks are avoided via `data/memory.json`, not by marking mail as read.
 
 Write criteria in English or Chinese. Be specific. Examples of good criteria:
 

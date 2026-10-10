@@ -2,6 +2,9 @@
 
 Uses only the Python standard library (imaplib + email) so it runs cleanly
 on Raspberry Pi, Linux, macOS, and Windows.
+
+Messages are read with BODY.PEEK[] and folders are opened readonly —
+the checker never sets \\Seen, so mail stays unread for the user.
 """
 
 from __future__ import annotations
@@ -250,12 +253,3 @@ class EmailClient:
             body=body,
             account=self.account.name,
         )
-
-    def mark_seen(self, folder: str, uid: str | int) -> None:
-        if self._conn is None:
-            return
-        try:
-            self._conn.select(folder, readonly=False)
-            self._conn.store(str(uid).encode(), "+FLAGS", "\\Seen")
-        except Exception as exc:  # noqa: BLE001
-            log.debug("mark_seen failed for %s/%s: %s", self.account.name, uid, exc)
